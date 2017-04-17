@@ -55,7 +55,7 @@ $ roslaunch turtlebot_walker turtlebot_walker.launch
 You should see a Gazebo window open and spawn the demo world (located in the `/gazebo_world` directory of this repository) with jersey walls and other obstacles as well as the turtlebot robot. In addition, the turtlebot should start moving forward towards a wall. As it drives, should it encounter an obstacle, it will stop, turn in place to free itself, then continue driving.
 
 ## <a name="recording-rosbag"></a> Recording using rosbag
-The package `rosbag` is a common ROS tool that is used to record and playback ROS topic messages. The launch file for this project accepts a boolean flag called `record_walker` that toggles rosbag recording if included (true for record, false for do not record). To run both the publisher and subscriber node and record the published topics, run:
+The package `rosbag` is a common ROS tool that is used to record and playback ROS topic messages. The launch file for this project accepts a boolean flag called `record_walker` that toggles rosbag recording if included (true for record, false for do not record). To run the walker package and record the published topics, run:
 ```
 $ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws
 $ source devel/setup.bash
