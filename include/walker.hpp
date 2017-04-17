@@ -43,7 +43,7 @@
 
 #include <stdlib.h>
 #include <ros/ros.h>
-#include <string>
+#include <sensor_msgs/LaserScan.h>
 
 /**
  * @brief Walker class handles any support methods for the walker class
@@ -55,5 +55,23 @@ class Walker {
    */
   Walker();
 
+  /**
+   * @brief Callback function for the laser scans reported from turtlebot
+   */
+  void laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg);
+
+  /**
+   * @brief Returns if the turtlebot vehicle is close
+   *    to an object and a collision is about to occur
+   */
+  bool collisionDetected() {
+    return collision;
+  }
+
  private:
+  /**
+   * @brief Boolean flag denoting if a collision is about to occur
+   */
+  bool collision;
+
 };

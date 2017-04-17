@@ -43,10 +43,68 @@
 
 #include <stdlib.h>
 #include <ros/ros.h>
+#include <geometry_msgs/Twist.h>
 #include "walker.hpp"
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "walker");
+  // Initialize ROS and name our node "talker"
+  ros::init(argc, argv, "walker");
 
-    return 0;
+  // Handle for the process node. Will handle initialization and
+  //   cleanup of the node
+  ros::NodeHandle n;
+
+  // Walker object
+  Walker walker;
+
+  // Subscribe to the "scan" topic to listen for any
+  //   messages published on that topic.
+  // Set the buffer to 500 messages
+  // Set the callback to the chatterCallback method
+  ros::Subscriber sub = n.subscribe < sensor_msgs::LaserScan
+      > ("/scan", 500, &Walker::laserCallback, &walker);
+
+  // Publish the "velocity" topic to the turtlebot
+  ros::Publisher velocityPub = n.advertise < geometry_msgs::Twist
+      > ("/mobile_base/commands/velocity", 1000);
+
+  // Set up the publisher rate to 10 Hz
+  ros::Rate loop_rate(10);
+
+  // Initialize the twist message that we will command turtlebot with
+  geometry_msgs::Twist msg;
+  msg.linear.x = 0.0;
+  msg.linear.y = 0.0;
+  msg.linear.z = 0.0;
+  msg.angular.x = 0.0;
+  msg.angular.y = 0.0;
+  msg.angular.z = 0.0;
+
+  // While running, check if a collision is about to occur.
+  //  -If so, stop moving forward and rotate about the z-axis
+  //  -If not, stop rotating and move forward
+  while (ros::ok()) {
+    if (walker.collisionDetected()) {
+      // Set linear velocity to zero
+      msg.linear.x = 0.0;
+      // Set turn rate about the z-axis
+      msg.angular.z = 1.0;
+    } else {
+      // Set turn rate to zero
+      msg.angular.z = 0.0;
+      // Move forward slowly
+      msg.linear.x = 0.1;
+    }
+
+    // Publish the twist message to anyone listening
+    velocityPub.publish(msg);
+
+    // "Spin" a callback in case we set up any callbacks
+    ros::spinOnce();
+
+    // Sleep for the remaining time until we hit our 10 Hz rate
+    loop_rate.sleep();
+  }
+
+  return 0;
 }

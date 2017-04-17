@@ -41,11 +41,32 @@
  *  @copyright BSD
  */
 
+#include <stdlib.h>
+#include <ros/ros.h>
 #include "walker.hpp"
 
 /**
  * @brief Walker constructor
  */
-Walker::Walker() {
+Walker::Walker()
+    : collision(false) {
+}
+
+/**
+ * @brief Callback function for the laser scans reported from turtlebot
+ */
+void Walker::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
+
+  // Check if any scan from the laser is less than 0.75 meters
+  //  from the front of the robot. If so, a collision is about to occur
+  for (int i = 0; i < msg->ranges.size(); ++i) {
+    if (msg->ranges[i] < 0.75) {
+      collision = true;
+      return;
+    }
+  }
+
+  // Reset collision flag
+  collision = false;
 }
 
