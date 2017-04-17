@@ -15,7 +15,7 @@
         pkg="rosbag"
         name="record"
         type="record"
-        args="-a -O session.bag -x /camera/(.*)"
+        args="-a -O walker.bag -x /camera/(.*)"
         if="$(arg record_walker)"
     />
 </launch>
