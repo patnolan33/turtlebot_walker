@@ -56,7 +56,6 @@ Walker::Walker()
  * @brief Callback function for the laser scans reported from turtlebot
  */
 void Walker::laserCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
-
   // Check if any scan from the laser is less than 0.75 meters
   //  from the front of the robot. If so, a collision is about to occur
   for (int i = 0; i < msg->ranges.size(); ++i) {

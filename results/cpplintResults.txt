@@ -1,0 +1,9 @@
+$ ../../../../cpplint.py ./src/*.cpp ./test/*.cpp
+
+
+Done processing ./src/main.cpp
+Done processing ./src/walker.cpp
+Done processing ./test/main.cpp
+Done processing ./test/walkerTest.cpp
+Total errors found: 0
+

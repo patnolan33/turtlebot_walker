@@ -1,0 +1,13 @@
+$ cppcheck ./src/ ./test/
+
+
+
+Checking src/main.cpp...
+1/4 files checked 35% done
+Checking src/walker.cpp...
+2/4 files checked 59% done
+Checking test/main.cpp...
+3/4 files checked 79% done
+Checking test/walkerTest.cpp...
+4/4 files checked 100% done
+

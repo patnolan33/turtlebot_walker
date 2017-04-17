@@ -42,8 +42,6 @@
  */
 
 #include <ros/ros.h>
-#include <ros/service_client.h>
-#include <tf/transform_listener.h>
 #include <gtest/gtest.h>
 #include <string>
 #include "walker.hpp"
@@ -52,5 +50,5 @@
  * @brief Test that should pass
  */
 TEST(TestSuite, should_pass) {
-  EXPECT_EQ(1,1);
+  EXPECT_EQ(1, 1);
 }
